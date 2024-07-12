@@ -1,25 +1,29 @@
 # langchain-fastapi-template
 This is a simple RAG API built with FastAPI and LangChain.
-## 1. Set the API Key
+
+## Run Locally
+
+### 1. Set the API Key
 The `.env` file has a single environment variable to set,
 currently defined as `OPENAI_API_KEY=xxxx`. 
 Please change the `xxxx` value to your own OpenAI API key.
-## 2. Install the python requirements
+### 2. Install the python requirements
 ```bash
 pip install -r requirements.txt
 ```
 
-## 3. Generate the Vector Store
-It will be enough to run the command below to generate the vector
+### 3. Generate the Vector Store
+The vector database is already provided as part of this repo,
+but if the user prefers, it will be enough to run the command below to generate the vector
 database.
 ```bash
-python rag.py
+python rag.py --repopulate
 ```
 The directories for the documents and where the vector database
 will be saved can be specified, but the API currently assumes
 they are in their default locations.
 
-## 4. Run and Query the API
+### 4. Run and Query the API
 Run the API with 
 ```bash
 fastapi run main.py
@@ -47,3 +51,24 @@ $ bash sample.sh
 "You should contact the Compliance Department for information about sales restrictions."
 "Spain, Italy, Germany, and Sweden are on the company's no sale list."%    
 ```
+
+## Docker
+**Note: The OpenAI API key still needs to be set before using Docker.**
+
+
+The provided dockerfile will create an image that will include
+vectors if generated, and generate them if not. Simply
+build the image with the following command.
+```bash
+docker build . -t rag 
+```
+
+Run the image once it's built with the following, please do not
+omit the port option as it is necessary to send requests to the
+container.
+```bash
+docker run -p 8000:8000 rag
+```
+
+After building and running, sending requests as shown above will return 
+the desired results.

@@ -23,6 +23,6 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 # generate vectors if not available
 RUN python rag.py
 
-CMD ["fastapi", "run", "main.py", "--port", "8888"]
+CMD ["fastapi", "run", "main.py", "--port", "8000"]
 
-EXPOSE 8888
+EXPOSE 8000

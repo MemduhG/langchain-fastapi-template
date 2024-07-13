@@ -12,8 +12,9 @@ COPY ./.env /code/.env
 COPY ./main.py /code/main.py
 COPY ./rag.py /code/rag.py
 
+ARG OPENAI_API_KEY=""
+ENV OPENAI_API_KEY=$OPENAI_API_KEY
 
-ENV OPENAI_API_KEY=""
 ENV PYTHONUNBUFFERED=1
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt

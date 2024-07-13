@@ -69,16 +69,29 @@ $ bash sample.sh
 ```
 
 ## Docker
-**Note: The OpenAI API key still needs to be set before using Docker.**
+**Note: The OpenAI API key still needs to be set before using 
+Docker. The following section assumes it is set in the `.env` file.**
 
-
+### Build
 The provided dockerfile will create an image that will include
 vectors if generated, and generate them if not. Simply
 build the image with the following command.
 ```bash
 docker build . -t rag 
 ```
+If the OpenAI key is set in your environment and not in the `.env`
+file, build with the following command instead:
+```bash
+docker build --build-arg=OPENAI_API_KEY . -t rag
+```
+If it is neither in the environment variables or the `.env` file,
+an alternative is to simple provide it before running the build
+command, e.g.
+```bash
+OPENAI_API_KEY=xxxx docker build --build-arg=OPENAI_API_KEY . -t rag
+```
 
+### Run
 Run the image once it's built with the following, please do not
 omit the port option as it is necessary to send requests to the
 container.

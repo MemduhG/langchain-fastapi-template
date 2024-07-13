@@ -13,9 +13,16 @@ curl -X POST https://langchain-fastapi-template-production.up.railway.app/questi
 ## Run Locally
 
 ### 1. Set the API Key
+The easier way to do this is using the `.env`
+file.
 The `.env` file has a single environment variable to set,
 currently defined as `OPENAI_API_KEY=xxxx`. 
 Please change the `xxxx` value to your own OpenAI API key.
+
+Alternatively one can set the environment variable 
+`OPENAI_API_KEY`to their key. The former method is provided 
+for the sake of user-friendliness. In either case please do 
+not commit your API key to a git repo.
 ### 2. Install the python requirements
 ```bash
 pip install -r requirements.txt

@@ -15,6 +15,9 @@ COPY ./main.py /code/main.py
 COPY ./rag.py /code/rag.py
 
 
+ENV OPENAI_API_KEY=""
+ENV PYTHONUNBUFFERED=1
+
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 # generate vectors if not available

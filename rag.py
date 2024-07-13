@@ -63,7 +63,6 @@ def get_retrieval_chain() -> Runnable:
     
         Question: {input}"""
     )
-    print("this is the key:", os.environ["OPENAI_API_KEY"])
     llm = ChatOpenAI(openai_api_key=os.environ["OPENAI_API_KEY"])
     document_chain = create_stuff_documents_chain(llm, prompt)
 

@@ -1,6 +1,15 @@
 # langchain-fastapi-template
 This is a simple RAG API built with FastAPI and LangChain.
 
+## Quick Demo
+The docker image is currently running on Railway and the url can be used for 
+queries like so:
+```bash
+curl -X POST https://langchain-fastapi-template-production.up.railway.app/question -H "Content-Type: application/json" -d '{"input": "Why not trade with Sweden?", "detailed": false}'
+```
+
+
+
 ## Run Locally
 
 ### 1. Set the API Key
@@ -72,3 +81,4 @@ docker run -p 8000:8000 rag
 
 After building and running, sending requests as shown above will return 
 the desired results.
+

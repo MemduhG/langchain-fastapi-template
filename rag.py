@@ -23,8 +23,8 @@ def load_api_key():
         os.environ[api_key_var] = env_var
         print("API key taken from environment.")
     else:
-        load_dotenv()
-        print("Loaded API key from .env file")
+        load_dotenv(override=True)
+        print(f"Loaded API key from .env file")
 
 
 def load_documents(folder: str = "./documents") -> list[Document]:

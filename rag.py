@@ -16,7 +16,10 @@ from langchain_core.runnables.base import Runnable
 import argparse
 
 
-def load_api_key():
+def load_api_key() -> None:
+    """
+    Get env var for API key, if not available try to get it from the .env file.
+    """
     api_key_var = "OPENAI_API_KEY"
     env_var = os.getenv(api_key_var)
     if env_var and env_var != "":
@@ -24,7 +27,7 @@ def load_api_key():
         print("API key taken from environment.")
     else:
         load_dotenv(override=True)
-        print(f"Loaded API key from .env file")
+        print("Loaded API key from .env file")
 
 
 def load_documents(folder: str = "./documents") -> list[Document]:
@@ -36,6 +39,12 @@ def load_documents(folder: str = "./documents") -> list[Document]:
 
 
 def populate_vector_db(docs: list[Document], db_path: str = "vectors") -> VectorStore:
+    """
+
+    :param docs:    Documents loaded from the disk with the TextLoader.
+    :param db_path: Path where the vector database will be stored.
+    :return:        An initialized vector store.
+    """
     load_api_key()
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
     text_splitter = RecursiveCharacterTextSplitter()
@@ -46,6 +55,10 @@ def populate_vector_db(docs: list[Document], db_path: str = "vectors") -> Vector
 
 
 def load_vector_db(db_path: str = "vectors") -> VectorStore:
+    """
+    :param db_path: Path to find the saved vector store.
+    :return:        The vector store loaded from the disk.
+    """
     load_api_key()
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
     db = FAISS.load_local(db_path, embeddings, allow_dangerous_deserialization=True)
@@ -53,6 +66,13 @@ def load_vector_db(db_path: str = "vectors") -> VectorStore:
 
 
 def get_retrieval_chain() -> Runnable:
+    """
+    Creates a pipeline for asking the LLM questions about our documents.
+    The document chain creates a prompt from a given document.
+    The retrieval chain first looks up the most relevant documents in the database
+    and then produces queries using these documents as a context for the LLM.
+    :return: The retrieval chain ready to be queried.
+    """
     load_api_key()
     prompt = ChatPromptTemplate.from_template(
         """Answer the following question based only on the provided context:
@@ -81,7 +101,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     if path.exists(args.db_path) and args.repopulate is False:
-        print(f"The vector DB path '{args.db_path}' already exists. Run with option --repopulate to force repopulation.")
+        print(
+            f"The vector DB path '{args.db_path}' already exists. Run with option --repopulate to force repopulation."
+        )
         exit()
 
     print("Loading documents...")

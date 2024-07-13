@@ -1,4 +1,3 @@
-from typing import Union
 from pydantic import BaseModel
 
 from fastapi import FastAPI
@@ -20,4 +19,3 @@ def answer_question(query: Query):
         return output
     else:
         return output["answer"]
-
